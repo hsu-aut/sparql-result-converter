@@ -1,6 +1,7 @@
 {
-    "name": "ontology-based-planning-system",
-    "version": "0.0.0",
+    "name": "json_table2tree",
+    "version": "0.0.1",
+    "description": "A little utility class to transform tabular json structures into a nested tree",
     "scripts": {
     },
     "private": true,
@@ -8,6 +9,27 @@
       "json-groupby": "^1.1.0",
       "lodash": "^4.17.15"
     },
+    "files": [
+        "lib",
+        "src"
+      ],
+      "repository": {
+        "type": "git",
+        "url": "git+https://github.com/aljoshakoecher/table2tree.git"
+      },
+      "keywords": [
+        "json",
+        "table",
+        "tree",
+        "table2tree",
+        "javascript"
+      ],
+      "author": "Aljosha Koecher",
+      "license": "MIT",
+      "bugs": {
+        "url": "https://github.com/aljoshakoecher/table2tree/issues"
+      },
+      "homepage": "https://github.com/aljoshakoecher/table2tree#readme",
     "devDependencies": {
     }
   }
