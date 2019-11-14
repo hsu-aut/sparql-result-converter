@@ -2,22 +2,23 @@ var groupBy = require('json-groupby')
 var _ = require('lodash');
 
 // Maps the query result of "select_allModules" to an array of Modules
-module.exports = class GraphQueryMapper {
-    
-    /** Groups a SPARQL query result and converts it from a tabular structure to a regular nested array of elements  
-     * @param inputArray The 'raw' SPARQL result that needs to be converted
-     * @returns The converted structure
-    */
-    mapQueryResults(inputArray, toGroupBy, currElement=0){
+class JsonTable2Tree {
+
+    /**
+     * Groups a table-structure and converts it to a tree-like structure
+     * @param {*} inputArray An array representing data structured as a table 
+     * @param {*} treeModel An object representing the final output (as a tree-structure)
+     */
+    convertTableToTree(inputArray, treeModel, currElement=0){
 
         // first: transform array
         if (currElement == 0 ) {
-            inputArray = this.transformArray(inputArray);
+            inputArray = transformArray(inputArray);
         }
         
         
         // get currrent element and fix child root
-        let currGroup = toGroupBy[currElement]
+        let currGroup = treeModel[currElement]
         currGroup.childRoot = typeof currGroup.childRoot === "undefined" ? "content" : currGroup.childRoot;
 
         // group the ungrouped inputArray
@@ -42,8 +43,8 @@ module.exports = class GraphQueryMapper {
             }
 
 
-            if ((currElement <= (toGroupBy.length-2)) && (this.allEntriesContainGroupingProperty(groupedElement, toGroupBy[currElement+1].object))) {
-                groupedElement = (this.mapQueryResults(groupedElement, toGroupBy, currElement+1));
+            if ((currElement <= (treeModel.length-2)) && (allEntriesContainGroupingProperty(groupedElement, treeModel[currElement+1].object))) {
+                groupedElement = (this.convertTableToTree(groupedElement, treeModel, currElement+1));
             }
 
            
@@ -51,7 +52,7 @@ module.exports = class GraphQueryMapper {
 
             // Delete the all elements that have already been grouped
             groupedElement.forEach(element => {
-                toGroupBy.forEach(group => {
+                treeModel.forEach(group => {
                     delete element[group.object];
                 })
             });
@@ -80,24 +81,34 @@ module.exports = class GraphQueryMapper {
         
         return inputArray;
     }
-
-
-    allEntriesContainGroupingProperty(arrayToCheck, groupingProperty) {
-        for (let i = 0; i < arrayToCheck.length; i++) {
-            const element = arrayToCheck[i];
-            if (!element.hasOwnProperty(groupingProperty)){
-                return false;
-            }
-        }
-        return true;
-    }
-
-    transformArray(inputArray) {
-        inputArray.forEach(inputElem => {
-            Object.keys(inputElem).map(inputElemKey =>{
-                return inputElem[inputElemKey] = inputElem[inputElemKey].value
-            })
-        });
-        return inputArray;
-    } 
 }
+
+
+/**
+ * Checks whether or not all entries contain the property that is used for grouping
+ * @param {*} arrayToCheck 
+ * @param {*} groupingProperty 
+ */
+function allEntriesContainGroupingProperty(arrayToCheck, groupingProperty) {
+    for (let i = 0; i < arrayToCheck.length; i++) {
+        const element = arrayToCheck[i];
+        if (!element.hasOwnProperty(groupingProperty)){
+            return false;
+        }
+    }
+    return true;
+};
+
+
+function transformArray(inputArray) {
+    inputArray.forEach(inputElem => {
+        Object.keys(inputElem).map(inputElemKey =>{
+            return inputElem[inputElemKey] = inputElem[inputElemKey].value
+        })
+    });
+    return inputArray;
+}
+
+
+module.exports = JsonTable2Tree;
+
