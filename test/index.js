@@ -64,7 +64,7 @@ describe('The test', () => {
       }
     ];
 
-    const convertedResult = resultConverter.convertTableToTree(testData.results, resultObject);
+    const convertedResult = resultConverter.convert(testData.results, resultObject);
     assert.deepEqual(convertedResult, expectedResult, 'Testing table-to-tree-conversion failed...');
   });
 });
