@@ -15,7 +15,7 @@ describe('The test', () => {
     // Object that describes how the result should be structured
     const resultObject = [
       {
-        object: 'personName',
+        object: 'owner',
         name: 'name',
         childRoot: 'pets'
       }

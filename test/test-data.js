@@ -2,10 +2,10 @@
  * Mock-up of a piece of data that could be returned from a DB-Query
  */
 const testData = {
-  head: ['personName', 'petName', 'petType'],
+  head: ['owner', 'petName', 'petType'],
   results: [
     {
-      personName: {
+      owner: {
         type: 'String',
         value: 'Alex',
       },
@@ -19,7 +19,7 @@ const testData = {
       }
     },
     {
-      personName: {
+      owner: {
         type: 'String',
         value: 'John',
       },
@@ -33,7 +33,7 @@ const testData = {
       }
     },
     {
-      personName: {
+      owner: {
         type: 'String',
         value: 'John',
       },
@@ -47,7 +47,7 @@ const testData = {
       }
     },
     {
-      personName: {
+      owner: {
         type: 'String',
         value: 'Mary',
       },
@@ -61,7 +61,7 @@ const testData = {
       }
     },
     {
-      personName: {
+      owner: {
         type: 'String',
         value: 'Mary',
       },
@@ -75,7 +75,7 @@ const testData = {
       }
     },
     {
-      personName: {
+      owner: {
         type: 'String',
         value: 'Mary',
       },
