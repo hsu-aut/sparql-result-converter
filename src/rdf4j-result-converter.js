@@ -46,8 +46,10 @@ class Rdf4jResultConverter {
       }
 
 
-      if ((currElement <= (treeModel.length - 2)) && (allEntriesContainGroupingProperty(groupedElement, treeModel[currElement + 1].object))) {
-        groupedElement = (this.convert(groupedElement, treeModel, currElement + 1));
+      if (currElement <= (treeModel.length - 2)) {
+        if (allEntriesContainGroupingProperty(groupedElement, treeModel[currElement + 1].object)) {
+          groupedElement = (this.convert(groupedElement, treeModel, currElement + 1));
+        }
       }
 
 
