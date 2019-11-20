@@ -16,7 +16,7 @@ describe('The test', () => {
     const resultObject = [
       {
         objectToGroup: 'owner',
-        name: 'name',
+        name: 'ownerName',
         childRoot: 'pets'
       }
     ];
