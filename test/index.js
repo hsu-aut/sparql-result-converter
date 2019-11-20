@@ -15,7 +15,7 @@ describe('The test', () => {
     // Object that describes how the result should be structured
     const resultObject = [
       {
-        object: 'owner',
+        objectToGroup: 'owner',
         name: 'name',
         childRoot: 'pets'
       }
@@ -24,40 +24,40 @@ describe('The test', () => {
     // Expected result:
     const expectedResult = [
       {
-        name: 'Alex',
+        ownerName: 'Peter',
         pets: [
           {
-            petName: 'Rex',
+            pet: 'Rex',
             petType: 'Dog'
           }
         ]
       },
       {
-        name: 'John',
+        ownerName: 'John',
         pets: [
           {
-            petName: 'Lassie',
+            pet: 'Lassie',
             petType: 'Dog'
           },
           {
-            petName: 'Oliver',
+            pet: 'Oliver',
             petType: 'Cat'
           }
         ]
       },
       {
-        name: 'Mary',
+        ownerName: 'Mary',
         pets: [
           {
-            petName: 'Huey',
+            pet: 'Huey',
             petType: 'Cat'
           },
           {
-            petName: 'Dewey',
+            pet: 'Dewey',
             petType: 'Cat'
           },
           {
-            petName: 'Louie',
+            pet: 'Louie',
             petType: 'Cat'
           }
         ]
