@@ -25,7 +25,7 @@ class Rdf4jResultConverter {
     currGroup.childRoot = typeof currGroup.childRoot === 'undefined' ? 'content' : currGroup.childRoot;
 
     // group the ungrouped outputArray
-    const groupedArray = groupBy(outputArray, [currGroup.object]);
+    const groupedArray = groupBy(outputArray, [currGroup.objectToGroup]);
 
     // Empty the outputArray array, it will later be filled with the grouped content
     outputArray = [];
@@ -47,7 +47,7 @@ class Rdf4jResultConverter {
 
 
       if (currElement <= (treeModel.length - 2)) {
-        if (allEntriesContainGroupingProperty(groupedElement, treeModel[currElement + 1].object)) {
+        if (allEntriesContainGroupingProperty(groupedElement, treeModel[currElement + 1].objectToGroup)) {
           groupedElement = (this.convert(groupedElement, treeModel, currElement + 1));
         }
       }
@@ -56,7 +56,7 @@ class Rdf4jResultConverter {
       // Delete the all elements that have already been grouped
       groupedElement.forEach((element) => {
         treeModel.forEach((group) => {
-          delete element[group.object];
+          delete element[group.objectToGroup];
         });
       });
 
