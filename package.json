@@ -1,6 +1,6 @@
 {
   "name": "rdf4j-result-converter",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A little utility class to transform the tabular results that you get from an rdf4j REST API into a nested JSON tree",
   "scripts": {
     "clean": "rimraf lib",
