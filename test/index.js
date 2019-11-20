@@ -16,7 +16,7 @@ describe('The test', () => {
     const resultObject = [
       {
         objectToGroup: 'owner',
-        name: 'name',
+        name: 'ownerName',
         childRoot: 'pets'
       }
     ];
@@ -27,7 +27,7 @@ describe('The test', () => {
         ownerName: 'Peter',
         pets: [
           {
-            pet: 'Rex',
+            petName: 'Rex',
             petType: 'Dog'
           }
         ]
@@ -36,11 +36,11 @@ describe('The test', () => {
         ownerName: 'John',
         pets: [
           {
-            pet: 'Lassie',
+            petName: 'Lassie',
             petType: 'Dog'
           },
           {
-            pet: 'Oliver',
+            petName: 'Oliver',
             petType: 'Cat'
           }
         ]
@@ -49,15 +49,15 @@ describe('The test', () => {
         ownerName: 'Mary',
         pets: [
           {
-            pet: 'Huey',
+            petName: 'Huey',
             petType: 'Cat'
           },
           {
-            pet: 'Dewey',
+            petName: 'Dewey',
             petType: 'Cat'
           },
           {
-            pet: 'Louie',
+            petName: 'Louie',
             petType: 'Cat'
           }
         ]

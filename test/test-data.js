@@ -7,7 +7,7 @@ const testData = {
     {
       owner: {
         type: 'String',
-        value: 'Alex',
+        value: 'Peter',
       },
       petName: {
         type: 'String',

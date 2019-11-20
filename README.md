@@ -78,7 +78,7 @@ The returned JSON just represents this table, the JSON looks like this:
           "type": "uri",
           "value": "http://example.com#Dog"
         },
-        "pet": {
+        "petName": {
           "type": "uri",
           "value": "http://example.com#Rex"
         }
@@ -92,7 +92,7 @@ The returned JSON just represents this table, the JSON looks like this:
           "type": "uri",
           "value": "http://example.com#Cat"
         },
-        "pet": {
+        "petName": {
           "type": "uri",
           "value": "http://example.com#Huey"
         }
@@ -106,7 +106,7 @@ The returned JSON just represents this table, the JSON looks like this:
           "type": "uri",
           "value": "http://example.com#Cat"
         },
-        "pet": {
+        "petName": {
           "type": "uri",
           "value": "http://example.com#Dewey"
         }
@@ -120,7 +120,7 @@ The returned JSON just represents this table, the JSON looks like this:
           "type": "uri",
           "value": "http://example.com#Cat"
         },
-        "pet": {
+        "petName": {
           "type": "uri",
           "value": "http://example.com#Louie"
         }
@@ -134,7 +134,7 @@ The returned JSON just represents this table, the JSON looks like this:
           "type": "uri",
           "value": "http://example.com#Dog"
         },
-        "pet": {
+        "petName": {
           "type": "uri",
           "value": "http://example.com#Lassie"
         }
@@ -148,7 +148,7 @@ The returned JSON just represents this table, the JSON looks like this:
           "type": "uri",
           "value": "http://example.com#Bird"
         },
-        "pet": {
+        "petName": {
           "type": "uri",
           "value": "http://example.com#Oliver"
         }
@@ -165,7 +165,7 @@ const convertStructure = [
   {
     objectToGroup: 'owner',           // property that should be grouped
     name: 'ownerName',                // new name for the grouped property
-    childRoot: 'pets'                 // name of the array of the remaining properties (pet and petType)
+    childRoot: 'pets'                 // name of the array that will contain the remaining properties (petName and petType)
   }
 ];
 ```
