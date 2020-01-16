@@ -5,7 +5,7 @@ const transformArray = require('./array-util').transformArray;
 const allEntriesContainGroupingProperty = require('./array-util').allEntriesContainGroupingProperty;
 
 // Maps the query result of "select_allModules" to an array of Modules
-class Rdf4jResultConverter {
+class SparqlResultConverter {
   /**
    * Groups a table-structure and converts it to a tree-like structure
    * @param {*} inputArray An array representing data structured as a table
@@ -92,4 +92,4 @@ class Rdf4jResultConverter {
 }
 
 
-module.exports = Rdf4jResultConverter;
+module.exports = SparqlResultConverter;

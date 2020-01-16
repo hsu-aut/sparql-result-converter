@@ -1,18 +1,14 @@
-import {
-  assert
-} from 'chai';
+import { assert } from 'chai';
 
-const Rdf4JResultConverter = require('../lib/rdf4j-result-converter');
+const SparqlResultConverter = require('../lib/sparql-result-converter');
 const testData = require('./test-data');
 
-const resultConverter = new Rdf4JResultConverter();
-
-// This is the table-structure we might get from a DB
+const resultConverter = new SparqlResultConverter();
 
 
 describe('The test', () => {
   it('should test table-to-tree-conversion', () => {
-    // Object that describes how the result should be structured
+    // Object that defines the structure of the result
     const resultObject = [
       {
         objectToGroup: 'owner',
