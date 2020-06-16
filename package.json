@@ -9,7 +9,7 @@
     "test:only": "mocha -r ts-node/register tests/**/*.test.ts",
     "coverage": "nyc npm run test:only",
     "lint": "eslint src tests/**/* --ext .ts",
-    "prepublishOnly": "npm run lin && npm run coverage && npm run build"
+    "prepublishOnly": "npm run lint && npm run coverage && npm run build"
   },
   "files": [
     "dist/**/*"
