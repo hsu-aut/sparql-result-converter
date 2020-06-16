@@ -3,19 +3,18 @@
   "version": "1.0.3",
   "description": "Little utility function to that converts the table-like result of a SPARQL query into a JSON tree with a user-defined structure",
   "scripts": {
-    "clean": "rimraf src",
-    "clean-node_modules": "rimraf node_modules",
-    "build": "tsc src",
+    "clean": "rimraf dist",
+    "build": "tsc --project tsconfig.build.json",
     "test": "npm run lint && npm run coverage",
     "test:only": "mocha -r ts-node/register tests/**/*.test.ts",
     "coverage": "nyc npm run test:only",
-    "lint": "eslint src tests/**/* --ext .ts"
+    "lint": "eslint src tests/**/* --ext .ts",
+    "prepublishOnly": "npm run lin && npm run coverage && npm run build"
   },
   "files": [
-    "lib",
-    "src"
+    "dist/**/*"
   ],
-  "main": "./lib/sparql-result-converter.js",
+  "main": "./dist/SparqlResultConverter.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/aljoshakoecher/sparql-result-converter.git"
