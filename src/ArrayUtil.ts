@@ -5,7 +5,7 @@ export class ArrayUtil {
     * @param {*} arrayToCheck
     * @param {*} groupingProperty
     */
-    static allEntriesContainGroupingProperty(arrayToCheck, groupingProperty) {
+    static allEntriesContainGroupingProperty(arrayToCheck: any[], groupingProperty: string): boolean {
         for (let i = 0; i < arrayToCheck.length; i++) {
             const element = arrayToCheck[i];
             if (!Object.prototype.hasOwnProperty.call(element, groupingProperty)) {
