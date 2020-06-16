@@ -35,7 +35,7 @@ describe('Two Layer Test', () => {
             },
             {
                 objectToGroup: 'petType',
-                name: 'animal',
+                name: 'type',
                 childRoot: 'pets'
             }
         ];

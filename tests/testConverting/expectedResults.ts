@@ -47,8 +47,8 @@ export const expectedTwoLayerResult = [
         petTypes: [
             {
                 type: 'Dog',
-                animals: [
-                    { name: 'Rex' }
+                pets: [
+                    { petName: 'Rex' }
                 ]
             }
         ]
@@ -58,14 +58,14 @@ export const expectedTwoLayerResult = [
         petTypes: [
             {
                 type: 'Dog',
-                animals: [
-                    { name: 'Lassie' }
+                pets: [
+                    { petName: 'Lassie' }
                 ]
             },
             {
                 type: 'Cat',
-                animals: [
-                    { name: 'Oliver' }
+                pets: [
+                    { petName: 'Oliver' }
                 ]
             }
         ]
@@ -75,10 +75,10 @@ export const expectedTwoLayerResult = [
         petTypes: [
             {
                 type: 'Cat',
-                animals: [
-                    { name: 'Huey' },
-                    { name: 'Dewey' },
-                    { name: 'Louie' },
+                pets: [
+                    { petName: 'Huey' },
+                    { petName: 'Dewey' },
+                    { petName: 'Louie' },
                 ]
             }
         ]
