@@ -1,7 +1,10 @@
+![npm](https://img.shields.io/npm/v/sparql-result-converter)
+![GitHub](https://img.shields.io/github/license/aljoshakoecher/sparql-result-converter)
+
 # sparql-result-converter
 A little utility class that helps you to transform the table-like results that you get from a SPARQL query into a nested JSON tree with a user-defined structure.
 
-# How to use it
+## How to use it
 Just install as a dependecy via `npm install sparql-result-converter`.
 In your code you can then use the converter like this:
 ```javascript
@@ -10,11 +13,11 @@ const SparqlResultConverter = require('sparql-result-converter');
 const converter = new SparqlResultConverter();
 
 // convert a SPARQL result
-const convertedResult = converter.convert(sparqlResult, convertStructure);
+const convertedResult = converter.convert(inputArray, mappingDefinitions);
 ```
 You have to pass two parameters to `convert()`:
-1) `sparqlResult` are the results you get from your SPARQL query
-2) `convertStructure` is an array that describes how your converted result should look like. It looks like this:
+1) `inputArray` are the results you get from your SPARQL query
+2) `mappingDefinitions` is an array that describes how your converted result should look like. It consists of mapping definitions looking like this:
        
    ```javascript
     const convertStructure = [
@@ -34,7 +37,7 @@ When you query Triple stores with their REST API, you get a tabular structure wh
 
 ![Example Graph](https://github.com/aljoshakoecher/sparql-result-converter/raw/documentation/images/docu-images/example-graph.png)
 
-There are three pet owners with varying numbers of pets. While Peter has only one pet, mary has three. If we'd like to find all pet owners, their pets and the type of pet(s) they have, we migh send the following query against our triple store:
+There are three pet owners with varying numbers of pets. While Peter has only one pet, mary has three. If we'd like to find all pet owners, their pets and the type of pet(s) they have, we might send the following query against our triple store:
 ```SPARQL
 PREFIX ex: <http://example.com#>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
