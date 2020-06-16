@@ -5,24 +5,20 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Run mocha",
-      "type": "node",
-      "request": "launch",
-      "program": "${workspaceRoot}/node_modules/mocha/bin/_mocha",
-      "stopOnEntry": false,
-      "args": [
-        "--require babel-register",
-        "--require babel-core/register",
-        "--require babel-polyfill",
-        " --recursive",
-        "--recursive",
-        "--no-timeouts"
-      ],
-      "cwd": "${workspaceRoot}",
-      "runtimeExecutable": null,
-      "env": {
-        "NODE_ENV": "testing"
-      }
+        "type": "node",
+        "request": "launch",
+        "name": "Mocha Current File",
+        "program": "${workspaceFolder}/node_modules/mocha/bin/_mocha",
+        "args": [
+          "--no-timeouts",
+          "--colors",
+          "${file}",
+          "--require",
+          "ts-node/register"
+        ],
+        "console": "integratedTerminal",
+        "sourceMaps": true,
+        "internalConsoleOptions": "neverOpen"
     },
     {
       "name": "Attach",
