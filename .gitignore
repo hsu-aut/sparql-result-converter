@@ -4,6 +4,8 @@
 /out-tsc
 # Only exists if Bazel was run
 /bazel-out
+tsconfig.build.tsbuildinfo
+tsconfig.tsbuildinfo
 
 # Logs
 logs
