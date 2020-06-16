@@ -1,11 +1,12 @@
 
 /* eslint-disable no-undef */
 module.exports = {
+    root: true,
     parser: '@typescript-eslint/parser',  // Specifies the ESLint parser
     extends: [
         "eslint:recommended",             // Uses the recommended rules from the @typescript-eslint/eslint-plugin
-        // "plugin:@typescript-eslint/recommended",
         "plugin:@typescript-eslint/eslint-recommended",
+        "plugin:@typescript-eslint/recommended",
     ],
     parserOptions: {
         ecmaVersion: 2018,  // Allows for the parsing of modern ECMAScript features

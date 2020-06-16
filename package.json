@@ -6,10 +6,10 @@
     "clean": "rimraf src",
     "clean-node_modules": "rimraf node_modules",
     "build": "tsc src",
-    "test": "npm run lint && npm run cover",
+    "test": "npm run lint && npm run coverage",
     "test:only": "mocha -r ts-node/register tests/**/*.test.ts",
-    "cover": "nyc -r lcov -e .ts -x \"*.test.ts\" npm run test",
-    "lint": "eslint src test/** --ext .ts"
+    "coverage": "nyc npm run test:only",
+    "lint": "eslint src tests/**/* --ext .ts"
   },
   "files": [
     "lib",
@@ -36,7 +36,7 @@
   },
   "homepage": "https://github.com/aljoshakoecher/sparql-result-converter#readme",
   "dependencies": {
-    "json-groupby": "^1.1.0",
+    "lodash.groupby": "^4.6.0",
     "lodash.isempty": "^4.4.0"
   },
   "devDependencies": {
@@ -46,10 +46,10 @@
     "@typescript-eslint/eslint-plugin": "^3.3.0",
     "@typescript-eslint/parser": "^3.3.0",
     "chai": "^4.1.2",
-    "eslint": "^5.16.0",
+    "eslint": "^6.8.0",
     "eslint-plugin-import": "^2.7.0",
     "mocha": "^6.1.3",
-    "nyc": "^13.3.0",
+    "nyc": "^15.1.0",
     "rimraf": "^2.6.2",
     "ts-node": "^8.10.2",
     "typescript": "^3.9.5"
