@@ -1,44 +1,41 @@
-import groupBy = require('json-groupby')
-// import { groupby} from "json-groupby";
+import { groupBy } from "lodash";
 import { isEmpty } from "lodash";
 import { ArrayUtil, SparqlResultLine } from "./ArrayUtil";
 
 // Maps the query result of "select_allModules" to an array of Modules
 export class SparqlResultConverter {
     /**
-   * Groups a table-structure and converts it to a tree-like structure
-   * @param {*} inputArray An array representing data structured as a table
-   * @param {*} mappingDefinitions An array of objects representing the structure of the final output
-   */
-    convert(inputArray: SparqlResultLine[], mappingDefinitions: MappingDefinition[], currElement = 0) {
-        let outputArray;
+ * Groups a table-structure and converts it to a tree-like structure
+ * @param {*} inputArray An array representing data structured as a table
+ * @param {*} mappingDefinitions An array of objects representing the structure of the final output
+ */
+    convert(inputArray: SparqlResultLine[], mappingDefinitions: MappingDefinition[], currElement = 0): Record<string, unknown>[] {
+        let flattenedArray;
 
         // first: transform array
         if (currElement === 0) {
-            outputArray = ArrayUtil.extractValues(inputArray);
+            flattenedArray = ArrayUtil.extractValues(inputArray);
+        } else {
+            flattenedArray = inputArray;
         }
 
+        // get the current mapping object
+        const currentMappingDefition = mappingDefinitions[currElement];
 
-        // get currrent element and fix child root
-        const currGroup = mappingDefinitions[currElement];
-
-        // Fix childRoot if its not passed in. TODO: Remove this... Should always be passed
-        // currGroup.childRoot = typeof currGroup.childRoot === 'undefined' ? 'content' : currGroup.childRoot;
-
-        // group the ungrouped outputArray
-        const groupedArray = groupBy(outputArray, [currGroup.objectToGroup]);
+        // group the flattened array by the current mapping object's "objectToGroup" property
+        const groupedObject = groupBy(flattenedArray, (elem) => elem[currentMappingDefition.objectToGroup]);
 
         // Empty the outputArray array, it will later be filled with the grouped content
-        outputArray = [];
+        const outputArray = [];
 
-        Object.keys(groupedArray).forEach((key) => {
-            let groupedElement = groupedArray[key];
+        Object.keys(groupedObject).forEach((key) => {
+            let groupedElement = groupedObject[key];
 
             // Collect all elements that should be collected
             // TODO: Not only take groupedElement[0], but make sure the properties to collect are equal for all groupedElements
             const elemsToCollect = {};
-            if (Object.prototype.hasOwnProperty.call(currGroup, 'toCollect')) {
-                currGroup['toCollect'].forEach((elemToCollect) => {
+            if(currentMappingDefition.toCollect) {
+                currentMappingDefition.toCollect.forEach((elemToCollect) => {
                     elemsToCollect[elemToCollect] = groupedElement[0][elemToCollect];
                     groupedElement.forEach((inputElem) => {
                         delete inputElem[elemToCollect];
@@ -56,20 +53,20 @@ export class SparqlResultConverter {
 
             // Delete the all elements that have already been grouped
             groupedElement.forEach((element) => {
-                mappingDefinitions.forEach((group) => {
-                    delete element[group.objectToGroup];
+                mappingDefinitions.forEach((mapDef) => {
+                    delete element[mapDef.objectToGroup];
                 });
             });
 
 
             const nameToPush = {
-                [currGroup.name]: key,
+                [currentMappingDefition.name]: key,
             };
 
             let objToPush = {};
             if (!isEmpty(groupedElement[0])) {
                 const groupToPush = {
-                    [currGroup.childRoot]: groupedElement
+                    [currentMappingDefition.childRoot]: groupedElement
                 };
                 objToPush = {
                     ...nameToPush,
@@ -84,7 +81,7 @@ export class SparqlResultConverter {
             }
 
 
-            // Add the grouped element to the inputArray
+            // Add the grouped element to the outputArray
             outputArray.push(objToPush);
         });
 
@@ -94,7 +91,8 @@ export class SparqlResultConverter {
 
 
 interface MappingDefinition {
-    objectToGroup: string,
-    name: string,
-    childRoot: string
+  objectToGroup: string,
+  name: string,
+  childRoot: string,
+  toCollect?: string[];
 }
