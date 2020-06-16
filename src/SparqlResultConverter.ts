@@ -9,7 +9,7 @@ export class SparqlResultConverter {
  * @param {*} inputArray An array representing data structured as a table
  * @param {*} mappingDefinitions An array of objects representing the structure of the final output
  */
-    convert(inputArray: SparqlResultLine[], mappingDefinitions: MappingDefinition[], currElement = 0): Record<string, unknown>[] {
+    convert(inputArray: SparqlResultLine[], mappingDefinitions: MappingDefinition[], currElement = 0): unknown[] {
         let flattenedArray;
 
         // first: transform array
