@@ -91,9 +91,10 @@ export class SparqlResultConverter {
 }
 
 
-interface MappingDefinition {
-  objectToGroup: string,
-  name: string,
-  childRoot: string,
-  toCollect?: string[];
+export interface MappingDefinition {
+	rootName: string,
+	objectToGroup: string,
+	name: string,
+	toCollect?: string[];
+	childMappings?: MappingDefinition[],
 }
