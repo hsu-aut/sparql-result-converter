@@ -17,23 +17,29 @@ const convertedResult = converter.convert(inputArray, mappingDefinitions);
 ```
 You have to pass two parameters to `convert()`:
 1) `inputArray` are the results you get from your SPARQL query
-2) `mappingDefinitions` is an array that describes how your converted result should look like. It consists of mapping definitions looking like this:
+2) `mappingDefinitions` is a recursive structure that describes how your converted result should look like. It looks like this:
        
    ```javascript
-    const convertStructure = [
+    const convertStructure: MappingDefinition = [
       {
-        objectToGroup: 'yourObjectToGroup',
-        name: 'newPropertyName',
-        childRoot: 'nameOfTheSubordinateArray'
+		rootName: 'name of the property that this group will be subordinated under'
+		propertyToGroup: 'a variable in your SPARQL query that you want to group on',			 
+        name: 'this can be used to rename the variable',
+        childMappings: [{
+			// This is a Partial<MappingDefinition>. 
+			// --> You can define a complete MappingDefinition in case you want to create a nested structure
+			// --> You can also just set "rootName" if you don't want to group any further but want have the ungrouped "rest" under a defined rootName
+		}]
       }
-    ];
+	];
     ```
-      `objectToGroup`: The element in your query-result that you want to group (corresponds to a variable in the SELECT part of your query)</br>
+	
+      `propertyToGroup`: The element in your query-result that you want to group (corresponds to a variable in the SELECT part of your query)</br>
       `name`: Can be used for mapping the result object name to a new name.</br>
-      `childRoot`: The name of the root element of the subordinate array. After grouping your `objectToGroup`, the child elements will be added as an array. This array will be given the property name `childRoot`.</br>
+	  `rootName`: The key of the grouped element in the superordinate array. After grouping, the grouped structure will be added as an array with key 'rootName' in the parent element.</br>
 
 ## A more detailed description
-When you query Triple stores with their REST API, you get a tabular structure which can be somewhat ugly if the result actually is a nested tree-like structure. The REST-API returns a direct representation of the result-table in JSON. This is not very useful when you want to use your query-results in a frontend to dynamically display your data. Let's look at an example:
+When you query Triple stores with their REST API, you get a tabular structure which can be somewhat ugly if the result actually is a nested tree-like structure. The REST-API returns a direct representation of the result-table in JSON. This is not very useful when you want to use your query-results e.g. in a frontend to dynamically display your data. Let's look at an example:
 
 ![Example Graph](https://github.com/aljoshakoecher/sparql-result-converter/raw/documentation/images/docu-images/example-graph.png)
 
@@ -161,62 +167,136 @@ The returned JSON just represents this table, the JSON looks like this:
 }
 ```
 
-The result is an array consisting of objects for each row of the table. Now if you want to show all owners and all pets of each owner,  a nested structure is better suited. This is what sparql-result-converter gives you. It converts the flat array into a nested structure by grouping on certain properties. You can decide which properties should be grouped by passing an array representing your desired structure to the converter function. </br>
-In this example, we want to group on the owners and would therefore pass the following array:
+The result is an array consisting of objects for each row of the table. Now if you want to show all owners and all pets of each owner, a nested structure is better suited. **Converting from the tabular to a nested structure is exactly what sparql-result-converter does**. It converts the flat array into a nested structure by grouping on certain properties. You can decide which properties should be grouped by passing an array representing your desired structure to the converter function. </br>
+In a first step of this example, we could want to group on the owners and would therefore pass the mapping definition:
  ```javascript
-const convertStructure = [
-  {
-    objectToGroup: 'owner',           // property that should be grouped
-    name: 'ownerName',                // new name for the grouped property
-    childRoot: 'pets'                 // name of the array that will contain the remaining properties (petName and petType)
-  }
+const mappingDefinition: MappingDefinition[] = [
+	{
+		rootName: 'owners',
+		propertyToGroup: 'owner',
+		name: 'name',
+		childMappings: [{
+			rootName: 'pets',
+		}]
+	}
 ];
 ```
-The converted array will look like this:
+As a result, we want an object with key 'owners', therefore `rootName` = owners. Furthermore, we want to group on ?owner (see SPARQL query), therefore we set `propertyToGroup` to be 'owner'. As the key for the grouped array is "owners", we might want to change the owner-property to be 'name'. This is done by setting `name` to 'name'. In this first example, we don't want to group any further, but we want to make sure that the rest (i.e. the pets) is subordinated under the key 'pets', that's why we set `rootName` of the only childMapping to 'pets'.
+
+The converted result will look like this:
 ```javascript
-const expectedResult = [
-  {
-    ownerName: 'Peter',
-    pets: [
-      {
-        petName: 'Rex',
-        petType: 'Dog'
-      }
-    ]
-  },
-  {
-    ownerName: 'John',
-    pets: [
-      {
-        petName: 'Lassie',
-        petType: 'Dog'
-      },
-      {
-        petName: 'Oliver',
-        petType: 'Cat'
-      }
-    ]
-  },
-  {
-    ownerName: 'Mary',
-    pets: [
-      {
-        petName: 'Huey',
-        petType: 'Cat'
-      },
-      {
-        petName: 'Dewey',
-        petType: 'Cat'
-      },
-      {
-        petName: 'Louie',
-        petType: 'Cat'
-      }
-    ]
-  }
-];
+{
+	owners: [
+		{
+			name: 'Peter',
+			pets: [
+				{
+					petName: 'Rex',
+					petType: 'Dog'
+				}
+			]
+		},
+		{
+			name: 'John',
+			pets: [
+				{
+					petName: 'Lassie',
+					petType: 'Dog'
+				},
+				{
+					petName: 'Oliver',
+					petType: 'Cat'
+				}
+			]
+		},
+		{
+			name: 'Mary',
+			pets: [
+				{
+					petName: 'Huey',
+					petType: 'Cat'
+				},
+				{
+					petName: 'Dewey',
+					petType: 'Cat'
+				},
+				{
+					petName: 'Louie',
+					petType: 'Cat'
+				}
+			]
+		}
+	]
+};
 ```
 
-You can use the `name` to map the `objectToGroup` to a new property name.The converter only takes the value and gets rid of the type, therefore you might want to change the property name.
 
-You can add more objects to `convertStructure` in case you want to successively group on more properties (In this example, you could also group on 'petType').
+Now let's say we that we want to group on the owners and on the petType afterwards. This can be achieved by a nested mapping definition. Look at the following mapping definition:
+
+```javascript
+const twoLayerMappingDefinition: MappingDefinition[] = [
+	{
+		rootName: 'owners',
+		propertyToGroup: 'owner',
+		name: 'name',
+		childMappings: [
+			{
+				rootName: 'petTypes',
+				propertyToGroup: 'petType',
+				name: 'type',
+				childMappings: [{
+					rootName: 'pets'
+				}]
+			}
+		]
+	},
+];
+```
+This nested mapping definition will lead to the following result:
+```javascript
+ {
+	owners: [
+		{
+			name: 'Peter',
+			petTypes: [
+				{
+					type: 'Dog',
+					pets: [
+						{ petName: 'Rex' }
+					]
+				}
+			]
+		},
+		{
+			name: 'John',
+			petTypes: [
+				{
+					type: 'Dog',
+					pets: [
+						{ petName: 'Lassie' }
+					]
+				},
+				{
+					type: 'Cat',
+					pets: [
+						{ petName: 'Oliver' }
+					]
+				}
+			]
+		},
+		{
+			name: 'Mary',
+			petTypes: [
+				{
+					type: 'Cat',
+					pets: [
+						{ petName: 'Huey' },
+						{ petName: 'Dewey' },
+						{ petName: 'Louie' },
+					]
+				}
+			]
+		}
+	]
+};
+```
