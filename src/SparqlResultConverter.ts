@@ -5,7 +5,7 @@ import { ArrayUtil, SparqlResultLine } from "./ArrayUtil";
 // Maps the query result of "select_allModules" to an array of Modules
 export class SparqlResultConverter {
 
-	convertToDefinition(inputArray: SparqlResultLine[], mappingDefinitions: MappingDefinition[]): Record<string, Array<any>> {
+	convertToDefinition(inputArray: SparqlResultLine[], mappingDefinitions: MappingDefinition[]): Record<string, Array<unknown>> {
 		const flattenedArray = ArrayUtil.extractValues(inputArray);
 		return this.convert(flattenedArray, mappingDefinitions);
 	}
@@ -15,7 +15,7 @@ export class SparqlResultConverter {
  	* @param {*} inputArray An array representing data structured as a table
  	* @param {*} mappingDefinitions An array of objects representing the structure of the final output
  	*/
-	private convert(inputArray: Record<string, string>[], mappingDefinitions: Partial<MappingDefinition>[]): Record<string,Array<any>> {
+	private convert(inputArray: Record<string, string>[], mappingDefinitions: Partial<MappingDefinition>[]): Record<string,Array<unknown>> {
 		const outputObject = {};
 
 		mappingDefinitions.forEach(mappingDefinition => {
@@ -24,9 +24,9 @@ export class SparqlResultConverter {
 			if(!inputArray.some(elem => elem[mappingDefinition.propertyToGroup])) return null;
 
 			// create a new array with the key [rootName], this will hold the grouped array
-			outputObject[mappingDefinition.rootName] = new Array<any>();
+			outputObject[mappingDefinition.rootName] = new Array<unknown>();
 
-			const groupedObject = groupBy(inputArray, (elem) => elem[mappingDefinition.propertyToGroup]) as Record<string, Array<any>>;
+			const groupedObject = groupBy(inputArray, (elem) => elem[mappingDefinition.propertyToGroup]) as Record<string, Array<unknown>>;
 
 			// delete ungrouped (undefined) values
 			delete groupedObject["undefined"];
@@ -59,11 +59,11 @@ export class SparqlResultConverter {
 					[mappingDefinition.name]: key,
 				};
 
-				let groupedArrayToPush : Record<string, Array<any>>;
+				let groupedArrayToPush : Record<string, Array<unknown>>;
 				let rootName;
 				if (mappingDefinition.childMappings && mappingDefinition.childMappings[0].propertyToGroup){
 					// If there are "real" childMappings (with a propertyToGroup) -> call convert() recursively on the groupedElement
-					groupedArrayToPush = this.convert(groupedElement, mappingDefinition.childMappings);
+					groupedArrayToPush = this.convert(groupedElement as Record<string, string>[], mappingDefinition.childMappings);
 				} else {
 					// If there are no more propertiesToGroup: put this element under the subElements rootName (if not set, take "children" as default)
 					(mappingDefinition.childMappings) ? rootName = mappingDefinition.childMappings[0].rootName : rootName ="children";
