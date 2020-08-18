@@ -1,7 +1,7 @@
 import { assert } from 'chai';
 import { expectedOneLayerResult, expectedTwoLayerResult } from './expectedResults';
 
-import { SparqlResultConverter } from "../../src/SparqlResultConverter";
+import { SparqlResultConverter, MappingDefinition } from "../../src/SparqlResultConverter";
 
 import {testData} from './test-data';
 
@@ -11,16 +11,18 @@ const resultConverter = new SparqlResultConverter();
 describe('One Layer Test', () => {
 	it('Should group a result on one layer', () => {
 		// Object that defines the structure of the result
-		const oneLayerMappingDefinition = [[
+		const oneLayerMappingDefinition: MappingDefinition[] = [
 			{
-				objectToGroup: 'owner',
+				rootName: 'owners',
+				propertyToGroup: 'owner',
 				name: 'ownerName',
-				childRoot: 'pets'
+				childMappings: [{
+					rootName: 'pets',
+				}]
 			}
-		]
 		];
 
-		const convertedResult = resultConverter.convert(testData.results, oneLayerMappingDefinition);
+		const convertedResult = resultConverter.convertToDefinition(testData.results, oneLayerMappingDefinition);
 		assert.deepEqual(convertedResult, expectedOneLayerResult, 'Testing one layer conversion failed...');
 	});
 });
@@ -28,19 +30,24 @@ describe('One Layer Test', () => {
 describe('Two Layer Test', () => {
 	it('Should group a result on two layers', () => {
 		// Object that defines the structure of the result
-		const twoLayerMappingDefinition = [[
+		const twoLayerMappingDefinition: MappingDefinition[] = [
 			{
-				objectToGroup: 'owner',
+				rootName: 'owners',
+				propertyToGroup: 'owner',
 				name: 'ownerName',
-				childRoot: 'petTypes'
+				childMappings: [
+					{
+						rootName: 'petTypes',
+						propertyToGroup: 'petType',
+						name: 'type',
+						childMappings: [{
+							rootName: 'pets'
+						}]
+					}
+				]
 			},
-			{
-				objectToGroup: 'petType',
-				name: 'type',
-				childRoot: 'pets'
-			}
-		]];
-		const convertedResult = resultConverter.convert(testData.results, twoLayerMappingDefinition);
+		];
+		const convertedResult = resultConverter.convertToDefinition(testData.results, twoLayerMappingDefinition);
 
 		assert.deepEqual(convertedResult, expectedTwoLayerResult, 'Testing two layer conversion failed...');
 	});

@@ -1,6 +1,6 @@
 // Expected result for one layer mapping:
-export const expectedResult = [
-	{
+export const expectedTwoLayerResult = {
+	owners: [{
 		ownerName: 'Peter',
 		dogs: [
 			{
@@ -40,48 +40,41 @@ export const expectedResult = [
 			}
 		]
 	}
-];
+	]};
 
-// export const expectedTwoLayerResult = [
-// 	{
-// 		ownerName: 'Peter',
-// 		petTypes: [
-// 			{
-// 				type: 'Dog',
-// 				pets: [
-// 					{ petName: 'Rex' }
-// 				]
-// 			}
-// 		]
-// 	},
-// 	{
-// 		ownerName: 'John',
-// 		petTypes: [
-// 			{
-// 				type: 'Dog',
-// 				pets: [
-// 					{ petName: 'Lassie' }
-// 				]
-// 			},
-// 			{
-// 				type: 'Cat',
-// 				pets: [
-// 					{ petName: 'Oliver' }
-// 				]
-// 			}
-// 		]
-// 	},
-// 	{
-// 		ownerName: 'Mary',
-// 		petTypes: [
-// 			{
-// 				type: 'Cat',
-// 				pets: [
-// 					{ petName: 'Huey' },
-// 					{ petName: 'Dewey' },
-// 					{ petName: 'Louie' },
-// 				]
-// 			}
-// 		]
-// 	}
-// ];
+export const expectedOneLayerResult = {
+	men: [
+		{
+			name: 'Peter',
+			pets: [{
+				"dogName": "Rex"
+			}]
+		},
+		{
+			name: 'John',
+			pets: [{
+				"catName": "Jimmy",
+				"dogName": "Lassie"
+			},
+			{
+				"catName": "Jimmy",
+				"dogName": "Oliver"
+			}]
+		}
+	],
+	women: [
+		{
+			name: 'Mary',
+			pets: [
+				{
+					"catName": "Huey",
+					"dogName": "Louie"
+				},
+				{
+					"catName": "Dewey",
+					"dogName": "Louie"
+				}
+			]
+		}
+	]
+};
