@@ -21,9 +21,9 @@ export class ArrayUtil {
     * Transforms an array of objects to an array of simple datatypes by extracting every value-property.
     * @param {*} sparqlResult Array of objects that contain a value-property
     */
-	static extractValues(sparqlResult: SparqlResultLine[]): TransformedSparqlResultElement[] {
+	static extractValues(sparqlResult: SparqlResultLine[]): Record<string, string>[] {
 
-		const outputArray = new Array<TransformedSparqlResultElement>();
+		const outputArray = new Array<Record<string, string>>();
 
 		// Take every array element and extract all values of all object keys -> flatten the array
 		sparqlResult.forEach((sparqlResultLine:SparqlResultLine) => {
@@ -48,8 +48,3 @@ export interface SparqlResultLine {
     value: string
   }
 }
-
-export interface TransformedSparqlResultElement {
-  [propName: string]: string;
-}
-
