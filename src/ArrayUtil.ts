@@ -1,43 +1,43 @@
 export class ArrayUtil {
 
-    /**
+	/**
     * Checks whether or not all entries of the array contain the property that is used for grouping
     * @param {*} arrayToCheck
     * @param {*} groupingProperty
     */
-    static allEntriesContainGroupingProperty(arrayToCheck: any[], groupingProperty: string): boolean {
-        for (let i = 0; i < arrayToCheck.length; i++) {
-            const element = arrayToCheck[i];
-            if (!Object.prototype.hasOwnProperty.call(element, groupingProperty)) {
-                return false;
-            }
-        }
-        return true;
-    }
+	static allEntriesContainGroupingProperty(arrayToCheck: any[], groupingProperty: string): boolean {
+		for (let i = 0; i < arrayToCheck.length; i++) {
+			const element = arrayToCheck[i];
+			if (!Object.prototype.hasOwnProperty.call(element, groupingProperty)) {
+				return false;
+			}
+		}
+		return true;
+	}
 
 
 
-    /**
+	/**
     * Transforms an array of objects to an array of simple datatypes by extracting every value-property.
     * @param {*} sparqlResult Array of objects that contain a value-property
     */
-    static extractValues(sparqlResult: SparqlResultLine[]): TransformedSparqlResultElement[] {
+	static extractValues(sparqlResult: SparqlResultLine[]): Record<string, string>[] {
 
-        const outputArray = new Array<TransformedSparqlResultElement>();
+		const outputArray = new Array<Record<string, string>>();
 
-        // Take every array element and extract all values of all object keys -> flatten the array
-        sparqlResult.forEach((sparqlResultLine:SparqlResultLine) => {
-            const objectKeys = Object.keys(sparqlResultLine);
+		// Take every array element and extract all values of all object keys -> flatten the array
+		sparqlResult.forEach((sparqlResultLine:SparqlResultLine) => {
+			const objectKeys = Object.keys(sparqlResultLine);
 
-            const outputElement = {};
-            objectKeys.forEach((key) => {
-                outputElement[key] = sparqlResultLine[key].value;
-            });
-            outputArray.push(outputElement);
-        });
+			const outputElement = {};
+			objectKeys.forEach((key) => {
+				outputElement[key] = sparqlResultLine[key].value;
+			});
+			outputArray.push(outputElement);
+		});
 
-        return outputArray;
-    }
+		return outputArray;
+	}
 
 
 }
@@ -48,8 +48,3 @@ export interface SparqlResultLine {
     value: string
   }
 }
-
-export interface TransformedSparqlResultElement {
-  [propName: string]: string;
-}
-
