@@ -5,6 +5,20 @@ import { ArrayUtil, SparqlResultLine } from "./ArrayUtil";
 // Maps the query result of "select_allModules" to an array of Modules
 export class SparqlResultConverter {
 
+	// convertToClass<T>(inputArray: SparqlResultLine[], type: (new () => T)): T{
+	// 	let propertyNames: string[];
+	// 	try {
+	// 		const obj = new type();
+	// 		propertyNames = Object.getOwnPropertyNames(obj);
+	// 	}catch (err) {
+	// 		throw new Error("Error while creating an instance of your type. Make sure 'type' is a valid class with a default constrcutor.");
+	// 	}
+	// 	propertyNames.forEach(propName => {
+
+	// 	});
+	// 	return;
+	// }
+
 	convertToDefinition(inputArray: SparqlResultLine[], mappingDefinitions: MappingDefinition[]): Record<string, Array<unknown>> {
 		const flattenedArray = ArrayUtil.extractValues(inputArray);
 		return this.convert(flattenedArray, mappingDefinitions);
@@ -144,6 +158,6 @@ export interface MappingDefinition {
 	propertyToGroup: string,
 	name: string,
 	toCollect?: string[];
-	childMappings?: Array<Partial<MappingDefinition> & Pick<Required<MappingDefinition>, "rootName">,
+	childMappings?: Array<Partial<MappingDefinition> & Pick<Required<MappingDefinition>, "rootName">>,
 }
 

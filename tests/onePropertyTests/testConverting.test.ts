@@ -36,7 +36,6 @@ describe('One Layer Test', () => {
 				toCollect: ['ownerAge'],
 				childMappings: [{
 					rootName: 'pets',
-
 				}]
 			}
 		];
