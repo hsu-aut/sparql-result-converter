@@ -35,6 +35,7 @@
   },
   "homepage": "https://github.com/aljoshakoecher/sparql-result-converter#readme",
   "dependencies": {
+    "lodash.clonedeep": "^4.5.0",
     "lodash.groupby": "^4.6.0",
     "lodash.isempty": "^4.4.0"
   },
