@@ -1,4 +1,53 @@
-// Expected result for one layer mapping:
+// Expected result for a very simple one layer mapping:
+export const expectedSimpleOneLayerResult = {
+	owners: [
+		{
+			ownerName: 'Peter',
+			children: [
+				{
+					petName: 'Rex',
+					petType: 'Dog',
+					ownerAge: 50
+				}
+			]
+		},
+		{
+			ownerName: 'John',
+			children: [
+				{
+					petName: 'Lassie',
+					petType: 'Dog',
+					ownerAge: 25
+				},
+				{
+					petName: 'Oliver',
+					petType: 'Cat',
+					ownerAge: 25
+				}
+			]
+		},
+		{
+			ownerName: 'Mary',
+			children: [
+				{
+					petName: 'Huey',
+					petType: 'Cat',
+					ownerAge: 65
+				},
+				{
+					petName: 'Dewey',
+					petType: 'Cat',
+					ownerAge: 65
+				},
+				{
+					petName: 'Louie',
+					petType: 'Cat',
+					ownerAge: 65
+				}
+			]
+		}
+	]};
+
 export const expectedOneLayerResult = {
 	owners: [
 		{
