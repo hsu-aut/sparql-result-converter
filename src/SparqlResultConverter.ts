@@ -1,50 +1,35 @@
-import { groupBy } from "lodash";
+import { groupBy, cloneDeep } from "lodash";
 import isEmpty = require ("lodash.isempty");
+import {} from "lodash";
 import { ArrayUtil, SparqlResultLine } from "./ArrayUtil";
 
-// Maps the query result of "select_allModules" to an array of Modules
 export class SparqlResultConverter {
 
-	// convertToClass<T>(inputArray: SparqlResultLine[], type: (new () => T)): T{
-	// 	let propertyNames: string[];
-	// 	try {
-	// 		const obj = new type();
-	// 		propertyNames = Object.getOwnPropertyNames(obj);
-	// 	}catch (err) {
-	// 		throw new Error("Error while creating an instance of your type. Make sure 'type' is a valid class with a default constrcutor.");
-	// 	}
-	// 	propertyNames.forEach(propName => {
-
-	// 	});
-	// 	return;
-	// }
-
+	/**
+	 * Convert a SPARQL result according to an array of MappingDefinition
+	 * @param inputArray The SPARQL result (result.bindings)
+	 * @param mappingDefinitions An array of mapping definitions
+	 */
 	convertToDefinition(inputArray: SparqlResultLine[], mappingDefinitions: MappingDefinition[]): Record<string, Array<unknown>> {
 		const flattenedArray = ArrayUtil.extractValues(inputArray);
 		return this.convert(flattenedArray, mappingDefinitions);
 	}
 
+
 	/**
-    * Groups a table-structure and converts it to a tree-like structure
+    * Convert a SPARQL result according to an array of MappingDefinition
  	* @param {*} inputArray An array representing data structured as a table
- 	* @param {*} mappingDefinitions An array of objects representing the structure of the final output
+ 	* @param {*} mappingDefinitions An array of MappingDefinition objects representing the structure of the final output
  	*/
 	private convert(inputArray: Record<string, string>[], mappingDefinitions: Partial<MappingDefinition>[]): Record<string,Array<unknown>> {
 		const outputObject = {};
 
+		// Loop over mapping definitions, there could be multiple definitions on one layer
 		mappingDefinitions.forEach(mappingDefinition => {
 
-			// if no element of the input array has the property to group on, there's nothing to do return
-			// if(!inputArray.some(elem => elem[mappingDefinition.propertyToGroup])) return null;
-
-
-			// create a new array with the key [rootName], this will hold the grouped array
-
-
-			let groupedObject;
 			if (mappingDefinition.propertyToGroup && inputArray.some(elem => elem[mappingDefinition.propertyToGroup])) {
 				outputObject[mappingDefinition.rootName] = new Array<unknown>();
-				groupedObject = this.groupArray(inputArray, mappingDefinition);
+				const groupedObject = this.groupArray(inputArray, mappingDefinition);
 
 				for (const key in groupedObject) {
 					const groupedElement = groupedObject[key];
@@ -56,6 +41,8 @@ export class SparqlResultConverter {
 					if(mappingDefinition.toCollect) {
 						mappingDefinition.toCollect.forEach((elemToCollect) => {
 							elemsToCollect[elemToCollect] = groupedElement[0][elemToCollect];
+							// const a = [];
+							// groupedElement = groupedElement.filter(elem => elem[elemToCollect] == undefined);
 							groupedElement.forEach((elem) => {
 								delete elem[elemToCollect];
 							});
@@ -63,16 +50,28 @@ export class SparqlResultConverter {
 					}
 
 
-					let objToPush = {};
 					const nameToPush = {
 						[mappingDefinition.name]: key,
 					};
 
 					let groupedArrayToPush : Record<string, Array<unknown>>;
-					let rootName;
 					if (mappingDefinition.childMappings){
 						// If there are "real" childMappings (with a propertyToGroup) -> call convert() recursively on the groupedElement
 						groupedArrayToPush = this.convert(groupedElement as Record<string, string>[], mappingDefinition.childMappings);
+					}
+					else {
+						const clonedGroupedElement = cloneDeep(groupedElement);
+						clonedGroupedElement.forEach(elem => {
+							const keys = Object.keys(elem);
+							const keysToDelete = keys.filter(key => mappingDefinitions.some(mapDef => key === mapDef.propertyToGroup));
+							keysToDelete.forEach(keysToDelete => {
+								delete elem[keysToDelete];
+							});
+						});
+						if(!isEmpty(clonedGroupedElement[0])) {
+							groupedArrayToPush = {children: [ ...clonedGroupedElement]};
+						}
+
 					}
 					// else {
 					// 	// If there are no more propertiesToGroup: put this element under the subElements rootName (if not set, take "children" as default)
@@ -87,7 +86,7 @@ export class SparqlResultConverter {
 					// 		...elemsToCollect,
 					// 	};
 					// } else {
-					objToPush = {
+					const objToPush = {
 						...nameToPush,
 						...elemsToCollect,
 						...groupedArrayToPush
@@ -134,7 +133,8 @@ export class SparqlResultConverter {
 	}
 
 
-	private groupArray(inputArray: Record<string, string>[], mappingDefinition: Partial<MappingDefinition>): Record<string, Array<unknown>> {
+	private groupArray(inputArray: Record<string, string>[], mappingDefinition: Partial<MappingDefinition>)
+	: Record<string, Array<unknown>> {
 
 		const groupedObject = groupBy(inputArray, (elem) => elem[mappingDefinition.propertyToGroup]) as Record<string, Array<unknown>>;
 		// delete ungrouped (undefined) values
