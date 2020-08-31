@@ -28,6 +28,6 @@ export class ArrayUtil {
 export interface SparqlResultLine {
   [name: string]:  {
     type: string,
-    value: string
+    value: string | number | boolean
   }
 }
