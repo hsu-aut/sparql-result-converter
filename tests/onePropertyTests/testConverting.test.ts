@@ -1,5 +1,7 @@
 import { assert } from 'chai';
-import { expectedOneLayerResult, expectedTwoLayerResult, expectedOneLayerResultWithCollectedProperty, expectedTwoLayerResultWithCollectedProperty, expectedSimpleOneLayerResult } from './expectedResults';
+import { expectedOneLayerResult, expectedTwoLayerResult,
+	expectedOneLayerResultWithCollectedProperty, expectedTwoLayerResultWithCollectedProperty,
+	expectedSimpleOneLayerResult } from './expectedResults';
 
 import { SparqlResultConverter, MappingDefinition } from "../../src/SparqlResultConverter";
 
@@ -20,7 +22,8 @@ describe('One Layer Test', () => {
 		];
 
 		const convertedResult = resultConverter.convertToDefinition(testData.results, oneLayerMappingDefinition);
-		assert.deepEqual(convertedResult, expectedSimpleOneLayerResult, 'Testing one layer conversion without property-collection failed...');
+		assert.deepEqual(convertedResult, expectedSimpleOneLayerResult,
+			'Testing one layer conversion without property-collection failed...');
 	});
 
 	it('Should group a result on one layer with a rootName for the children', () => {
