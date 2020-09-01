@@ -8,7 +8,7 @@ export class SparqlResultConverter {
 	 * @param inputArray The SPARQL result (result.bindings)
 	 * @param mappingDefinitions An array of mapping definitions
 	 */
-	convertToDefinition(inputArray: SparqlResultLine[], mappingDefinitions: MappingDefinition[]): Record<string, Array<unknown>> {
+	public convertToDefinition(inputArray: SparqlResultLine[], mappingDefinitions: MappingDefinition[]): Record<string, Array<unknown>> {
 		const flattenedArray = ArrayUtil.extractValues(inputArray);
 		return this.convert(flattenedArray, mappingDefinitions);
 	}
