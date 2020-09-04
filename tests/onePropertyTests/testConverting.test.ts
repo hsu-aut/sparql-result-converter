@@ -21,7 +21,7 @@ describe('One Layer Test', () => {
 			}
 		];
 
-		const convertedResult = resultConverter.convertToDefinition(testData.results, oneLayerMappingDefinition);
+		const convertedResult = resultConverter.convertToDefinition(testData.results, oneLayerMappingDefinition).getAll();
 		assert.deepEqual(convertedResult, expectedSimpleOneLayerResult,
 			'Testing one layer conversion without property-collection failed...');
 	});
@@ -39,7 +39,7 @@ describe('One Layer Test', () => {
 			}
 		];
 
-		const convertedResult = resultConverter.convertToDefinition(testData.results, oneLayerMappingDefinition);
+		const convertedResult = resultConverter.convertToDefinition(testData.results, oneLayerMappingDefinition).getAll();
 		assert.deepEqual(convertedResult, expectedOneLayerResult, 'Testing one layer conversion without property-collection failed...');
 	});
 
@@ -57,7 +57,7 @@ describe('One Layer Test', () => {
 			}
 		];
 
-		const convertedResult = resultConverter.convertToDefinition(testData.results, oneLayerMappingDefinition);
+		const convertedResult = resultConverter.convertToDefinition(testData.results, oneLayerMappingDefinition).getAll();
 		assert.deepEqual(convertedResult, expectedOneLayerResultWithCollectedProperty,
 			'Testing one layer conversion without property-collection failed...');
 	});
@@ -83,7 +83,7 @@ describe('Two Layer Test', () => {
 				]
 			},
 		];
-		const convertedResult = resultConverter.convertToDefinition(testData.results, twoLayerMappingDefinition);
+		const convertedResult = resultConverter.convertToDefinition(testData.results, twoLayerMappingDefinition).getAll();
 
 		assert.deepEqual(convertedResult, expectedTwoLayerResult, 'Testing two layer conversion without property collection failed...');
 	});
@@ -109,7 +109,7 @@ describe('Two Layer Test', () => {
 				]
 			},
 		];
-		const convertedResult = resultConverter.convertToDefinition(testData.results, twoLayerMappingDefinition);
+		const convertedResult = resultConverter.convertToDefinition(testData.results, twoLayerMappingDefinition).getAll();
 
 		assert.deepEqual(convertedResult, expectedTwoLayerResultWithCollectedProperty,
 			'Testing two layer conversion with property collection failed...');

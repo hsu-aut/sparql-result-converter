@@ -29,7 +29,7 @@ describe('One-Layer-Test with multiple properties on first layer', () => {
 				}],
 			}];
 
-		const convertedResult = resultConverter.convertToDefinition(oneLayerTestData.results, oneLayerMappingDefinition);
+		const convertedResult = resultConverter.convertToDefinition(oneLayerTestData.results, oneLayerMappingDefinition).getAll();
 		assert.deepEqual(convertedResult, expectedOneLayerResult, 'Testing one layer conversion failed...');
 	});
 });
@@ -58,7 +58,7 @@ describe('Two-Layer-Test with multiple properties on the second layer', () => {
 			},
 		];
 
-		const convertedResult = resultConverter.convertToDefinition(twoLayerTestData.results, twoLayerMappingDefinition);
+		const convertedResult = resultConverter.convertToDefinition(twoLayerTestData.results, twoLayerMappingDefinition).getAll();
 		assert.deepEqual(convertedResult, expectedTwoLayerResult, 'Testing one layer conversion failed...');
 	});
 });

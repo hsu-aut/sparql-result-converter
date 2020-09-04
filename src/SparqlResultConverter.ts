@@ -3,6 +3,8 @@ import { ArrayUtil, SparqlResultLine } from "./ArrayUtil";
 
 export class SparqlResultConverter {
 
+	outputObject = {};
+
 	// TODO: Continue here
 	// convertToClass<T>(inputArray: SparqlResultLine[], initialProperty: string, type: (new () => T)): T{
 	// 	let mappingDefinition: MappingDefinition;
@@ -31,9 +33,10 @@ export class SparqlResultConverter {
 	// 	return;
 	// }
 
-	convertToDefinition(inputArray: SparqlResultLine[], mappingDefinitions: MappingDefinition[]): Record<string, Array<unknown>> {
+	public convertToDefinition(inputArray: SparqlResultLine[], mappingDefinitions: MappingDefinition[]): SparqlResultConverter {
 		const flattenedArray = ArrayUtil.extractValues(inputArray);
-		return this.convert(flattenedArray, mappingDefinitions);
+		this.outputObject = this.convert(flattenedArray, mappingDefinitions);
+		return this;
 	}
 
 
@@ -111,6 +114,30 @@ export class SparqlResultConverter {
 
 		});
 		return outputObject;
+	}
+
+	/**
+	 * Returns the grouped array of the first root element. Can be used as an easy getter if there is only one root element
+	 */
+	public getFirstRootElement(): Array<unknown>{
+		const keys = Object.keys(this.outputObject);
+		return this.get(keys[0]);
+	}
+
+	public getAll(): Record<string, Array<unknown>> {
+		return this.outputObject;
+	}
+
+	/**
+	 * Returns the grouped array with a given key
+	 * @param key A key of one of the root elements
+	 */
+	public get(key: string): Array<unknown> {
+		if(this.outputObject[key]) {
+			return this.outputObject[key];
+		} else {
+			return [];
+		}
 	}
 
 
