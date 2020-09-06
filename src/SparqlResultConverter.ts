@@ -33,9 +33,9 @@ export class SparqlResultConverter {
 	// 	return;
 	// }
 
-	public convertToDefinition(inputArray: SparqlResultLine[], mappingDefinitions: MappingDefinition[]): SparqlResultConverter {
+	public convertToDefinition(inputArray: SparqlResultLine[], mappingDefinitions: MappingDefinition[], keepUngroupedContents = true): SparqlResultConverter {
 		const flattenedArray = ArrayUtil.extractValues(inputArray);
-		this.outputObject = this.convert(flattenedArray, mappingDefinitions);
+		this.outputObject = this.convert(flattenedArray, mappingDefinitions, keepUngroupedContents);
 		return this;
 	}
 
@@ -45,7 +45,7 @@ export class SparqlResultConverter {
  	* @param {*} inputArray An array representing data structured as a table
  	* @param {*} mappingDefinitions An array of MappingDefinition objects representing the structure of the final output
  	*/
-	private convert(inputArray: Record<string, string>[], mappingDefinitions: Partial<MappingDefinition>[]): Record<string,Array<unknown>> {
+	private convert(inputArray: Record<string, string>[], mappingDefinitions: Partial<MappingDefinition>[], keepUngroupedContents: boolean): Record<string,Array<unknown>> {
 		const outputObject = {};
 
 		// Loop over mapping definitions, there could be multiple definitions on one layer
@@ -57,7 +57,7 @@ export class SparqlResultConverter {
 				// Create a new array and add it under "rootName"
 				outputObject[mappingDefinition.rootName] = new Array<unknown>();
 
-				// Group the inputArray and extract all grouped keys from the contained elements
+				// Group the inputArray
 				const groupedObject = this.groupArray(inputArray, mappingDefinition);
 
 				// After grouping the array, we have to check for every element of the groupedObject if it can be further grouped
@@ -77,7 +77,7 @@ export class SparqlResultConverter {
 
 					if (mappingDefinition.childMappings){
 						// If this mapDef has childMappings -> call convert() recursively on the groupedElement
-						groupedArrayToPush = this.convert(groupedElement as Record<string, string>[], mappingDefinition.childMappings);
+						groupedArrayToPush = this.convert(groupedElement as Record<string, string>[], mappingDefinition.childMappings, keepUngroupedContents);
 					} else {
 						// if there are no more childMappings -> create a copy of the groupedElement and remove all elements that might be grouped in the next steps
 						// (i.e. elements with key = propertyToGroup). All the remaining bits (stuff that doesn't get grouped) is added under "children"
@@ -89,7 +89,7 @@ export class SparqlResultConverter {
 								delete elem[keysToDelete];
 							});
 						});
-						if(!clonedGroupedElement.every(elem => isEmpty(elem))) {
+						if(keepUngroupedContents && !clonedGroupedElement.every(elem => isEmpty(elem))) {
 							groupedArrayToPush = {children: [ ...clonedGroupedElement]};
 						}
 
@@ -107,7 +107,7 @@ export class SparqlResultConverter {
 				}
 			} else {
 				// if there is nothing to group and the inputArry is not empty -> Simple return the inputArray as output
-				if(!inputArray.every(elem => isEmpty(elem))) {
+				if(!inputArray.every(elem => isEmpty(elem)) && keepUngroupedContents) {
 					outputObject[mappingDefinition.rootName] = [...inputArray];
 				}
 			}
