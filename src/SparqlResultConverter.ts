@@ -33,7 +33,8 @@ export class SparqlResultConverter {
 	// 	return;
 	// }
 
-	public convertToDefinition(inputArray: SparqlResultLine[], mappingDefinitions: MappingDefinition[], keepUngroupedContents = true): SparqlResultConverter {
+	public convertToDefinition(inputArray: SparqlResultLine[], mappingDefinitions: MappingDefinition[], keepUngroupedContents = true)
+	: SparqlResultConverter {
 		const flattenedArray = ArrayUtil.extractValues(inputArray);
 		this.outputObject = this.convert(flattenedArray, mappingDefinitions, keepUngroupedContents);
 		return this;
@@ -45,7 +46,8 @@ export class SparqlResultConverter {
  	* @param {*} inputArray An array representing data structured as a table
  	* @param {*} mappingDefinitions An array of MappingDefinition objects representing the structure of the final output
  	*/
-	private convert(inputArray: Record<string, string>[], mappingDefinitions: Partial<MappingDefinition>[], keepUngroupedContents: boolean): Record<string,Array<unknown>> {
+	private convert(inputArray: Record<string, string>[], mappingDefinitions: Partial<MappingDefinition>[], keepUngroupedContents: boolean)
+	: Record<string,Array<unknown>> {
 		const outputObject = {};
 
 		// Loop over mapping definitions, there could be multiple definitions on one layer
@@ -62,7 +64,7 @@ export class SparqlResultConverter {
 
 				// After grouping the array, we have to check for every element of the groupedObject if it can be further grouped
 				for (const key in groupedObject) {
-					const groupedElement = groupedObject[key];
+					const groupedElement = groupedObject[key] as Record<string, string>[];
 
 					// toCollect can be used to specify common properties of the superordinate element -> Here we extract these properties
 					// TODO: Not only take groupedElement[0], but make sure the properties to collect are equal for all groupedElements
@@ -77,7 +79,7 @@ export class SparqlResultConverter {
 
 					if (mappingDefinition.childMappings){
 						// If this mapDef has childMappings -> call convert() recursively on the groupedElement
-						groupedArrayToPush = this.convert(groupedElement as Record<string, string>[], mappingDefinition.childMappings, keepUngroupedContents);
+						groupedArrayToPush = this.convert(groupedElement, mappingDefinition.childMappings, keepUngroupedContents);
 					} else {
 						// if there are no more childMappings -> create a copy of the groupedElement and remove all elements that might be grouped in the next steps
 						// (i.e. elements with key = propertyToGroup). All the remaining bits (stuff that doesn't get grouped) is added under "children"
