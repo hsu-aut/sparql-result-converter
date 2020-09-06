@@ -1,5 +1,5 @@
-// Expected result for a very simple one layer mapping:
-export const expectedSimpleOneLayerResult = {
+// Expected result for a very simple one layer mapping including non-grouped children elements:
+export const oneLayerResultWithChildren = {
 	owners: [
 		{
 			ownerName: 'Peter',
@@ -45,6 +45,20 @@ export const expectedSimpleOneLayerResult = {
 					ownerAge: 65
 				}
 			]
+		}
+	]};
+
+// Expected result for a very simple one layer mapping without non-grouped children elements:
+export const oneLayerResultWithoutChildren = {
+	owners: [
+		{
+			ownerName: 'Peter',
+		},
+		{
+			ownerName: 'John',
+		},
+		{
+			ownerName: 'Mary',
 		}
 	]};
 
