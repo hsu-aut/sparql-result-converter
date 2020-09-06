@@ -8,7 +8,7 @@ import {oneLayerTestData, twoLayerTestData} from './test-data';
 const resultConverter = new SparqlResultConverter();
 
 
-describe('One-Layer-Test with multiple properties on first layer', () => {
+describe('Tests including multiple properties on one layer', () => {
 	it('Should group a result on two layers respecting multiple properties on the first layer', () => {
 		// Object that defines the structure of the result
 		const oneLayerMappingDefinition: MappingDefinition[] = [
@@ -32,11 +32,9 @@ describe('One-Layer-Test with multiple properties on first layer', () => {
 		const convertedResult = resultConverter.convertToDefinition(oneLayerTestData.results, oneLayerMappingDefinition).getAll();
 		assert.deepEqual(convertedResult, expectedOneLayerResult, 'Testing one layer conversion failed...');
 	});
-});
 
 
 
-describe('Two-Layer-Test with multiple properties on the second layer', () => {
 	it('Should group a result on two layers respecting multiple properties on the second layer', () => {
 
 		const twoLayerMappingDefinition: MappingDefinition[] = [
