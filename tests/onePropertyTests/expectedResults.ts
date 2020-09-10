@@ -268,9 +268,11 @@ export const expectedTwoLayerResultWithCollectedProperty = {
 						{
 							petName: 'Huey',
 						},
-						{ petName: 'Dewey',
+						{
+							petName: 'Dewey',
 						},
-						{ petName: 'Louie',
+						{
+							petName: 'Louie',
 						},
 					]
 				}
