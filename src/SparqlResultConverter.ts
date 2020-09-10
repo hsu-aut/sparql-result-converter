@@ -111,6 +111,8 @@ export class SparqlResultConverter {
 				// if there is nothing to group and the inputArry is not empty -> Simple return the inputArray as output
 				if(!inputArray.every(elem => isEmpty(elem)) && keepUngroupedContents) {
 					outputObject[mappingDefinition.rootName] = [...inputArray];
+				} else {
+					outputObject[mappingDefinition.rootName] = [];
 				}
 			}
 

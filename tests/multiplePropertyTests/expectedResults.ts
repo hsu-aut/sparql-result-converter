@@ -6,7 +6,8 @@ export const expectedTwoLayerResult = {
 			{
 				petName: 'Rex',
 			}
-		]
+		],
+		cats: []
 	},
 	{
 		ownerName: 'John',

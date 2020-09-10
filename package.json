@@ -1,6 +1,6 @@
 {
   "name": "sparql-result-converter",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "Little utility function to that converts the table-like result of a SPARQL query into a JSON tree with a user-defined structure",
   "scripts": {
     "clean": "rimraf dist && rimraf *.tsbuildinfo",

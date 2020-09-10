@@ -54,15 +54,15 @@ export const testData = {
 				},
 				"outputIri": {
 					"type": "uri",
-					"value": "https://siemens.de/skills#OpcUaSkill_result"
+					"value": "https://www.hsu-hh.de/skills#OpcUaSkill_result"
 				},
 				"stateMachine": {
 					"type": "uri",
-					"value": "https://siemens.de/skills#OpcUaSkill_StateMachine"
+					"value": "https://www.hsu-hh.de/skills#OpcUaSkill_StateMachine"
 				},
 				"skill": {
 					"type": "uri",
-					"value": "https://siemens.de/skills#OpcUaSkill"
+					"value": "https://www.hsu-hh.de/skills#OpcUaSkill"
 				},
 				"outputRequired": {
 					"type": "literal",
@@ -70,7 +70,7 @@ export const testData = {
 				},
 				"parameterIri": {
 					"type": "uri",
-					"value": "https://siemens.de/skills#OpcUaSkill_a"
+					"value": "https://www.hsu-hh.de/skills#OpcUaSkill_a"
 				},
 				"parameterRequired": {
 					"type": "literal",
@@ -108,15 +108,15 @@ export const testData = {
 				},
 				"outputIri": {
 					"type": "uri",
-					"value": "https://siemens.de/skills#OpcUaSkill_result"
+					"value": "https://www.hsu-hh.de/skills#OpcUaSkill_result"
 				},
 				"stateMachine": {
 					"type": "uri",
-					"value": "https://siemens.de/skills#OpcUaSkill_StateMachine"
+					"value": "https://www.hsu-hh.de/skills#OpcUaSkill_StateMachine"
 				},
 				"skill": {
 					"type": "uri",
-					"value": "https://siemens.de/skills#OpcUaSkill"
+					"value": "https://www.hsu-hh.de/skills#OpcUaSkill"
 				},
 				"outputRequired": {
 					"type": "literal",
@@ -124,7 +124,7 @@ export const testData = {
 				},
 				"parameterIri": {
 					"type": "uri",
-					"value": "https://siemens.de/skills#OpcUaSkill_a"
+					"value": "https://www.hsu-hh.de/skills#OpcUaSkill_a"
 				},
 				"parameterRequired": {
 					"type": "literal",
@@ -162,15 +162,15 @@ export const testData = {
 				},
 				"outputIri": {
 					"type": "uri",
-					"value": "https://siemens.de/skills#OpcUaSkill_result"
+					"value": "https://www.hsu-hh.de/skills#OpcUaSkill_result"
 				},
 				"stateMachine": {
 					"type": "uri",
-					"value": "https://siemens.de/skills#OpcUaSkill_StateMachine"
+					"value": "https://www.hsu-hh.de/skills#OpcUaSkill_StateMachine"
 				},
 				"skill": {
 					"type": "uri",
-					"value": "https://siemens.de/skills#OpcUaSkill"
+					"value": "https://www.hsu-hh.de/skills#OpcUaSkill"
 				},
 				"outputRequired": {
 					"type": "literal",
@@ -178,7 +178,7 @@ export const testData = {
 				},
 				"parameterIri": {
 					"type": "uri",
-					"value": "https://siemens.de/skills#OpcUaSkill_a"
+					"value": "https://www.hsu-hh.de/skills#OpcUaSkill_a"
 				},
 				"parameterRequired": {
 					"type": "literal",
@@ -192,11 +192,11 @@ export const testData = {
 				},
 				"outputIri": {
 					"type": "uri",
-					"value": "https://siemens.de/skills#OpcUaSkill_result"
+					"value": "https://www.hsu-hh.de/skills#OpcUaSkill_result"
 				},
 				"stateMachine": {
 					"type": "uri",
-					"value": "https://siemens.de/skills#OpcUaSkill_StateMachine"
+					"value": "https://www.hsu-hh.de/skills#OpcUaSkill_StateMachine"
 				},
 				"outputName": {
 					"type": "literal",
@@ -208,7 +208,7 @@ export const testData = {
 				},
 				"skill": {
 					"type": "uri",
-					"value": "https://siemens.de/skills#OpcUaSkill"
+					"value": "https://www.hsu-hh.de/skills#OpcUaSkill"
 				},
 				"outputRequired": {
 					"type": "literal",
@@ -216,7 +216,7 @@ export const testData = {
 				},
 				"parameterIri": {
 					"type": "uri",
-					"value": "https://siemens.de/skills#OpcUaSkill_b"
+					"value": "https://www.hsu-hh.de/skills#OpcUaSkill_b"
 				},
 				"outputType": {
 					"type": "literal",
