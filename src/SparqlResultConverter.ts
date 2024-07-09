@@ -5,34 +5,6 @@ export class SparqlResultConverter {
 
 	outputObject = {};
 
-	// TODO: Continue here
-	// convertToClass<T>(inputArray: SparqlResultLine[], initialProperty: string, type: (new () => T)): T{
-	// 	let mappingDefinition: MappingDefinition;
-	// 	mappingDefinition.propertyToGroup = initialProperty;
-	// 	mappingDefinition.name = initialProperty;
-	// 	mappingDefinition.rootName = `${initialProperty}s`
-	// 	let propertyNames: string[];
-	// 	try {
-	// 		const obj = new type();
-	// 		propertyNames = Object.getOwnPropertyNames(obj);
-	// 	}catch (err) {
-	// 		throw new Error("Error while creating an instance of your type. Make sure 'type' is a valid class with a default constrcutor.");
-	// 	}
-	// 	//TODO:
-	// 	// If a property type is simple, it can be collected -> push to toCollect
-	// 	// If a property type is another class, there has to be a new childmapping
-	// 	// But what about arrays of (both simple and complex) properties?
-	// 	propertyNames.forEach(propName => {
-	// 		if(typeof propName == ("string" || "number" || "boolean")) {
-	// 			mappingDefinition.toCollect.push(propName);
-	// 		} else {
-	// 			mappingDefinition.
-	// 		}
-
-	// 	});
-	// 	return;
-	// }
-
 	public convertToDefinition(inputArray: SparqlResultLine[], mappingDefinitions: MappingDefinition[], keepUngroupedContents = true)
 	: SparqlResultConverter {
 		const flattenedArray = ArrayUtil.extractValues(inputArray);
