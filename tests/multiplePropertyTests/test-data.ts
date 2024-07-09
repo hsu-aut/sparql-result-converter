@@ -145,3 +145,62 @@ export const oneLayerTestData = {
 		}
 	]
 };
+
+
+export const threeLayerCapabilityTestData =
+{
+	"head": [
+		"capability",
+		"input",
+		"type",
+		"output",
+		"capabilityType",
+		"processType"
+	],
+	"results": [
+		{
+			"output": {
+				"type": "uri",
+				"value": "http://www.w3id.org/hsu-aut/addition#OutputSum"
+			},
+			"input": {
+				"type": "uri",
+				"value": "http://www.w3id.org/hsu-aut/addition#InputA"
+			},
+			"capability": {
+				"type": "uri",
+				"value": "http://www.w3id.org/hsu-aut/addition#AdditionCapability"
+			},
+			"outputType": {
+				"type": "uri",
+				"value": "http://www.w3id.org/hsu-aut/VDI3682#Product"
+			},
+			"inputType": {
+				"type": "uri",
+				"value": "http://www.w3id.org/hsu-aut/VDI3682#Information"
+			}
+		},
+		{
+			"output": {
+				"type": "uri",
+				"value": "http://www.w3id.org/hsu-aut/addition#OutputSum"
+			},
+			"input": {
+				"type": "uri",
+				"value": "http://www.w3id.org/hsu-aut/addition#InputB"
+			},
+			"capability": {
+				"type": "uri",
+				"value": "http://www.w3id.org/hsu-aut/addition#AdditionCapability"
+			},
+			"outputType": {
+				"type": "uri",
+				"value": "http://www.w3id.org/hsu-aut/VDI3682#Product"
+			},
+			"inputType": {
+				"type": "uri",
+				"value": "http://www.w3id.org/hsu-aut/VDI3682#Information"
+			}
+		}
+	]
+};

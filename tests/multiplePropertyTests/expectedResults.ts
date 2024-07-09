@@ -79,3 +79,28 @@ export const expectedOneLayerResult = {
 		}
 	]
 };
+
+
+export const expectedThreeLayerResultWithoutKeepingUngroupedElements = {
+	capabilities: [
+		{
+			iri: 'http://www.w3id.org/hsu-aut/addition#AdditionCapability',
+			inputs: [
+				{
+					iri: 'http://www.w3id.org/hsu-aut/addition#InputA',
+					type: 'http://www.w3id.org/hsu-aut/VDI3682#Information'
+				},
+				{
+					iri: 'http://www.w3id.org/hsu-aut/addition#InputB',
+					type: 'http://www.w3id.org/hsu-aut/VDI3682#Information'
+				}
+			],
+			outputs: [
+				{
+					iri: 'http://www.w3id.org/hsu-aut/addition#OutputSum',
+					type: 'http://www.w3id.org/hsu-aut/VDI3682#Product'
+				}
+			]
+		}
+	]
+};
