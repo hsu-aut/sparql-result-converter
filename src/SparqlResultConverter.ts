@@ -142,6 +142,23 @@ export class SparqlResultConverter {
 		return groupedObject;
 	}
 
+	/**
+	 *
+	 * @param elemsToCollect
+	 * @returns
+	 */
+	private processElemsToCollect(elemsToCollect: Array<string>) {
+		const regex = /^([a-zA-Z0-9\-_]*)(?:\s(?:as)\s(\w*))?$/;
+		return elemsToCollect.map(elem => {
+			const match = elem.match(regex);
+			if (match) {
+				const originalName = match[1];
+				const renamedName = match[2] || originalName;
+				return new ElementToCollect(originalName, renamedName);
+			}
+			return null;
+		}).filter(Boolean);
+	}
 
 	/**
 	 * Extracts element that should be extracted out of a previously grouped element
@@ -154,14 +171,14 @@ export class SparqlResultConverter {
 		// if there's no "toCollect" -> do nothing
 		if (!mappingDefinition.toCollect || mappingDefinition.toCollect.length == 0) return null;
 
-		// extract every element that should be collected
-		mappingDefinition.toCollect.forEach((elemToCollect) => {
-			// extract only if every entry of groupedElement contains the element that is to be collected
-			if(groupedElement.every(groupedElem => groupedElem[elemToCollect])) {
-				elemsToCollect[elemToCollect] = groupedElement[0][elemToCollect];
-				// collected elements have to be deleted from groupedElement to exclude them from further grouping steps
+		// Get elemsToCollect in case some entries use renaming (e.g., x as y)
+		const processedElems = this.processElemsToCollect(mappingDefinition.toCollect);
+
+		processedElems.forEach(({ originalName, renamedName }) => {
+			if(groupedElement.every(groupedElem => groupedElem[originalName])) {
+				elemsToCollect[renamedName] = groupedElement[0][originalName];
 				groupedElement.forEach((elem) => {
-					delete elem[elemToCollect];
+					delete elem[originalName];
 				});
 			}
 		});
@@ -182,3 +199,9 @@ export interface MappingDefinition {
 	childMappings?: Array<Partial<MappingDefinition> & Pick<Required<MappingDefinition>, "rootName">>,
 }
 
+export class ElementToCollect {
+	constructor(
+		public originalName: string,
+		public renamedName: string
+	){}
+}
